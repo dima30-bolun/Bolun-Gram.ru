@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boltgram - Канал</title>
+    <link rel="stylesheet" href="/Bolun-Gram.ru/css/main.css">
+    <link rel="stylesheet" href="/Bolun-Gram.ru/css/channels.css">
+</head>
+<body>
+    <header>
+        <!-- Общий хедер -->
+    </header>
+
+    <main class="channel-view">
+        <div class="channel-header">
+            <h2 id="channelTitle"></h2>
+            <p id="channelDescription"></p>
+            <button id="joinChannelBtn">Присоединиться</button>
+        </div>
+        
+        <div class="channel-posts" id="channelPosts">
+            <!-- Посты будут загружены через JS -->
+        </div>
+        
+        <div class="post-form">
+            <textarea id="channelPostContent" placeholder="Написать в канал..."></textarea>
+            <button onclick="postToChannel()">Отправить</button>
+        </div>
+    </main>
+
+    <script src="/Bolun-Gram.ru/js/storage.js"></script>
+    <script src="/Bolun-Gram.ru/js/channels.js"></script>
+</body>
+</html>
