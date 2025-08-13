@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boltgram - Главная</title>
-    <base href="/Bolun-Gram.ru/">
+    <title>Boltgram - 袚谢邪胁薪邪褟</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <div id="app-loading">Загрузка Boltgram...</div>
-    
-    <script>
-        // Проверка базового пути
-        if(window.location.pathname === '/' || 
-           window.location.pathname === '/Bolun-Gram.ru') {
-            window.location.href = '/Bolun-Gram.ru/index.html';
-        }
-    </script>
-    
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Boltgram">
+        </div>
+        <nav>
+            <a href="index.html" class="active">袥械薪褌邪</a>
+            <a href="messages.html">小芯芯斜褖械薪懈褟</a>
+            <a href="calls.html">袟胁芯薪泻懈</a>
+            <a href="profile.html">袩褉芯褎懈谢褜</a>
+        </nav>
+        <div class="user-menu">
+            <span id="currentUsername"></span>
+            <button onclick="logout()">袙褘泄褌懈</button>
+        </div>
+    </header>
+
+    <main class="feed">
+        <div class="post-form">
+            <textarea id="postContent" placeholder="效褌芯 褍 胁邪褋 薪芯胁芯谐芯?"></textarea>
+            <div class="post-actions">
+                <button class="emoji-btn" onclick="toggleEmojiPicker('post')">馃槉</button>
+                <button onclick="createPost()">袨锌褍斜谢懈泻芯胁邪褌褜</button>
+            </div>
+            <div class="emoji-picker" id="postEmojiPicker"></div>
+        </div>
+        <div id="postsContainer"></div>
+    </main>
+
     <script src="js/storage.js"></script>
+    <script src="js/feed.js"></script>
+    <script src="js/emoji.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
