@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boltgram - Главная</title>
+    <base href="/Bolun-Gram.ru/">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div id="app-loading">Загрузка Boltgram...</div>
+    
+    <script>
+        // Проверка базового пути
+        if(window.location.pathname === '/' || 
+           window.location.pathname === '/Bolun-Gram.ru') {
+            window.location.href = '/Bolun-Gram.ru/index.html';
+        }
+    </script>
+    
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
