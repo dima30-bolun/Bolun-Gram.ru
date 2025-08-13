@@ -58,3 +58,4 @@ function getGroupsForUser(username) {
         group.members.includes(username)
     );
 }
+
