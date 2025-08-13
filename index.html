@@ -3,52 +3,1897 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boltgram - Социальная сеть</title>
-    <base href="/Bolun-Gram.ru/">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <title>Bolun-Gram - Социальная сеть нового поколения</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --dark: #1e1e2c;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #fca311;
+            --gray: #adb5bd;
+            --gray-light: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Навигационная панель */
+        .navbar {
+            width: 250px;
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            margin-left: 10px;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            padding: 0 15px;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .nav-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Основное содержимое */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-light);
+            font-size: 14px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification, .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .notification::after {
+            content: '3';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-profile img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Лента новостей */
+        .feed {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .posts {
+            flex: 2;
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+        
+        .create-post {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .post-input {
+            flex: 1;
+        }
+        
+        .post-input input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-light);
+            background: var(--gray-light);
+            cursor: pointer;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .post-action i {
+            margin-right: 5px;
+            font-size: 18px;
+        }
+        
+        .post {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .post-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-user img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .user-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .user-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .post-content {
+            margin-bottom: 15px;
+        }
+        
+        .post-content p {
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .post-image img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+        }
+        
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid var(--gray-light);
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 10px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .post-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .post-button {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .post-button:hover {
+            background: var(--gray-light);
+        }
+        
+        .post-button i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Боковая панель */
+        .sidebar-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .friend-request, .trending-channel, .suggested-group {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .friend-request:last-child, .trending-channel:last-child, .suggested-group:last-child {
+            border-bottom: none;
+        }
+        
+        .friend-request img, .trending-channel img, .suggested-group img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .friend-info, .channel-info, .group-info {
+            flex: 1;
+        }
+        
+        .friend-info h4, .channel-info h4, .group-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .friend-info p, .channel-info p, .group-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .friend-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .accept-btn, .decline-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .accept-btn {
+            background: var(--success);
+            color: white;
+        }
+        
+        .decline-btn {
+            background: var(--gray-light);
+            color: var(--gray);
+        }
+        
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .login-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--gray-light);
+        }
+        
+        .option-btn i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .feed {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                width: 70px;
+            }
+            
+            .nav-text {
+                display: none;
+            }
+            
+            .logo h1 {
+                display: none;
+            }
+            
+            .logo {
+                justify-content: center;
+                padding: 0 0 20px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .post-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
         <div class="logo">
-            <img src="images/logo.png" alt="Boltgram" loading="lazy">
+            <i class="fas fa-comment-dots"></i>
+            <h1>Bolun-Gram</h1>
         </div>
-        <nav>
-            <a href="index.html" class="active">Лента</a>
-            <a href="messages.html">Сообщения</a>
-            <a href="calls.html">Звонки</a>
-            <a href="profile.html">Профиль</a>
-            <a href="groups.html">Группы</a>
-            <a href="channels.html">Каналы</a>
-        </nav>
-        <div class="user-menu">
-            <span id="currentUsername">Гость</span>
-            <button id="logoutBtn">Выйти</button>
+        <div class="nav-links">
+            <a href="#" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Лента</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-user-friends"></i>
+                <span class="nav-text">Друзья</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span class="nav-text">Сообщения</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span class="nav-text">Группы</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-broadcast-tower"></i>
+                <span class="nav-text">Каналы</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-phone-alt"></i>
+                <span class="nav-text">Звонки</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-bell"></i>
+                <span class="nav-text">Уведомления</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span class="nav-text">Настройки</span>
+            </a>
         </div>
-    </header>
+    </nav>
 
-    <main class="feed">
-        <div class="post-form">
-            <textarea id="postContent" placeholder="Что у вас нового?" maxlength="500"></textarea>
-            <div class="post-actions">
-                <button class="emoji-btn" aria-label="Добавить смайлик">😊</button>
-                <button id="createPostBtn">Опубликовать</button>
+    <!-- Основное содержимое -->
+    <div class="main-content">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск в Bolun-Gram...">
             </div>
-            <div class="emoji-picker" id="postEmojiPicker" hidden></div>
+            <div class="user-actions">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="user-profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Профиль">
+                </div>
+            </div>
         </div>
-        <div id="postsContainer" class="posts-grid"></div>
-    </main>
 
-    <script type="module">
-        import { initApp } from './js/main.js';
-        import { initFeed } from './js/feed.js';
-        import { initEmojiPicker } from './js/emoji.js';
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            initApp();
-            initFeed();
-            initEmojiPicker();
+        <!-- Лента новостей -->
+        <div class="feed">
+            <!-- Посты -->
+            <div class="posts">
+                <!-- Создание поста -->
+                <div class="create-post">
+                    <div class="post-header">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Пользователь">
+                        <div class="post-input">
+                            <input type="text" placeholder="Что у вас нового?">
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action">
+                            <i class="fas fa-image"></i>
+                            <span>Фото/Видео</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-user-tag"></i>
+                            <span>Отметить друзей</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-smile"></i>
+                            <span>Эмоции</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пост 1 -->
+                <div class="post">
+                    <div class="post-user">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Пользователь">
+                        <div class="user-info">
+                            <h4>Анна Иванова</h4>
+                            <p>2 часа назад · <i class="fas fa-globe-europe"></i></p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Привет всем! Поделюсь с вами прекрасным видом, который открывается с горы Эльбрус. Это было незабываемое путешествие! ❤️🏔️</p>
+                    </div>
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Горы">
+                    </div>
+                    <div class="post-stats">
+                        <div class="likes">
+                            <i class="fas fa-thumbs-up"></i> 245
+                        </div>
+                        <div class="comments-shares">
+                            78 комментариев · 15 репостов
+                        </div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="post-button">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>Нравится</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="far fa-comment"></i>
+                            <span>Комментировать</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="fas fa-share"></i>
+                            <span>Поделиться</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пост 2 -->
+                <div class="post">
+                    <div class="post-user">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Пользователь">
+                        <div class="user-info">
+                            <h4>Михаил Петров</h4>
+                            <p>Вчера в 18:30 · <i class="fas fa-user-friends"></i></p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Только что опубликовал новое видео на моём канале! В этом выпуске мы тестируем новые смартфоны 2023 года. Не пропустите!</p>
+                    </div>
+                    <div class="post-stats">
+                        <div class="likes">
+                            <i class="fas fa-thumbs-up"></i> 124
+                        </div>
+                        <div class="comments-shares">
+                            42 комментария · 8 репостов
+                        </div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="post-button">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>Нравится</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="far fa-comment"></i>
+                            <span>Комментировать</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="fas fa-share"></i>
+                            <span>Поделиться</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="sidebar">
+                <!-- Запросы в друзья -->
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Запросы в друзья</h3>
+                    <div class="friend-request">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Пользователь">
+                        <div class="friend-info">
+                            <h4>Екатерина Смирнова</h4>
+                            <p>5 общих друзей</p>
+                        </div>
+                        <div class="friend-actions">
+                            <div class="accept-btn">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="decline-btn">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="friend-request">
+                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Пользователь">
+                        <div class="friend-info">
+                            <h4>Алексей Кузнецов</h4>
+                            <p>2 общих друга</p>
+                        </div>
+                        <div class="friend-actions">
+                            <div class="accept-btn">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="decline-btn">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Популярные каналы -->
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Популярные каналы</h3>
+                    <div class="trending-channel">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="Канал">
+                        <div class="channel-info">
+                            <h4>Технологии будущего</h4>
+                            <p>125K подписчиков</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="trending-channel">
+                        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80" alt="Канал">
+                        <div class="channel-info">
+                            <h4>Путешествия по миру</h4>
+                            <p>89K подписчиков</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="trending-channel">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Канал">
+                        <div class="channel-info">
+                            <h4>Кулинарные шедевры</h4>
+                            <p>214K подписчиков</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рекомендуемые группы -->
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Рекомендуемые группы</h3>
+                    <div class="suggested-group">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Группа">
+                        <div class="group-info">
+                            <h4>Фотографы России</h4>
+                            <p>45K участников</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="suggested-group">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Группа">
+                        <div class="group-info">
+                            <h4>IT Сообщество</h4>
+                            <p>112K участников</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация в Bolun-Gram</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="login-options">
+                    <div class="option-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </div>
+                    <div class="option-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Телефон</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">Полное имя</label>
+                    <input type="text" id="fullName" placeholder="Иван Иванов">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="example@mail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="tel" id="phone" placeholder="+7 (900) 123-45-67">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="Не менее 8 символов">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Подтвердите пароль</label>
+                    <input type="password" id="confirmPassword" placeholder="Повторите пароль">
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthday">Дата рождения</label>
+                    <input type="date" id="birthday">
+                </div>
+                
+                <button class="submit-btn">Зарегистрироваться</button>
+                
+                <p style="text-align: center; margin-top: 20px;">
+                    Уже есть аккаунт? <a href="#" style="color: var(--primary);">Войти</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Логика модальных окон
+        document.addEventListener('DOMContentLoaded', function() {
+            // Открытие модального окна регистрации
+            setTimeout(function() {
+                document.getElementById('registerModal').style.display = 'flex';
+            }, 1000);
+            
+            // Закрытие модальных окон
+            document.querySelectorAll('.close-modal').forEach(function(closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Клик вне модального окна
+            window.addEventListener('click', function(event) {
+                document.querySelectorAll('.modal').forEach(function(modal) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Переключение между вкладками навигации
+            document.querySelectorAll('.nav-item').forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Удаляем активный класс у всех элементов
+                    document.querySelectorAll('.nav-item').forEach(function(el) {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущему элементу
+                    this.classList.add('active');
+                });
+            });
+            
+            // Логика кнопок "Нравится"
+            document.querySelectorAll('.post-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    if (this.querySelector('i').classList.contains('far')) {
+                        this.querySelector('i').className = 'fas fa-thumbs-up';
+                        this.style.color = var(--primary);
+                    } else {
+                        this.querySelector('i').className = 'far fa-thumbs-up';
+                        this.style.color = 'inherit';
+                    }
+                });
+            });
         });
     </script>
 </body>
-</html>
+    </html> <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolun-Gram - Социальная сеть нового поколения</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --dark: #1e1e2c;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #fca311;
+            --gray: #adb5bd;
+            --gray-light: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Навигационная панель */
+        .navbar {
+            width: 250px;
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            margin-left: 10px;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            padding: 0 15px;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .nav-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Основное содержимое */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-light);
+            font-size: 14px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification, .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .notification::after {
+            content: '3';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-profile img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Лента новостей */
+        .feed {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .posts {
+            flex: 2;
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+        
+        .create-post {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .post-input {
+            flex: 1;
+        }
+        
+        .post-input input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-light);
+            background: var(--gray-light);
+            cursor: pointer;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .post-action i {
+            margin-right: 5px;
+            font-size: 18px;
+        }
+        
+        .post {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .post-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-user img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .user-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .user-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .post-content {
+            margin-bottom: 15px;
+        }
+        
+        .post-content p {
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .post-image img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+        }
+        
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid var(--gray-light);
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 10px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .post-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .post-button {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .post-button:hover {
+            background: var(--gray-light);
+        }
+        
+        .post-button i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Боковая панель */
+        .sidebar-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .friend-request, .trending-channel, .suggested-group {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .friend-request:last-child, .trending-channel:last-child, .suggested-group:last-child {
+            border-bottom: none;
+        }
+        
+        .friend-request img, .trending-channel img, .suggested-group img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .friend-info, .channel-info, .group-info {
+            flex: 1;
+        }
+        
+        .friend-info h4, .channel-info h4, .group-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .friend-info p, .channel-info p, .group-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .friend-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .accept-btn, .decline-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .accept-btn {
+            background: var(--success);
+            color: white;
+        }
+        
+        .decline-btn {
+            background: var(--gray-light);
+            color: var(--gray);
+        }
+        
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .login-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--gray-light);
+        }
+        
+        .option-btn i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .feed {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                width: 70px;
+            }
+            
+            .nav-text {
+                display: none;
+            }
+            
+            .logo h1 {
+                display: none;
+            }
+            
+            .logo {
+                justify-content: center;
+                padding: 0 0 20px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .post-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-comment-dots"></i>
+            <h1>Bolun-Gram</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Лента</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-user-friends"></i>
+                <span class="nav-text">Друзья</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span class="nav-text">Сообщения</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span class="nav-text">Группы</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-broadcast-tower"></i>
+                <span class="nav-text">Каналы</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-phone-alt"></i>
+                <span class="nav-text">Звонки</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-bell"></i>
+                <span class="nav-text">Уведомления</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span class="nav-text">Настройки</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое -->
+    <div class="main-content">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск в Bolun-Gram...">
+            </div>
+            <div class="user-actions">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="user-profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Профиль">
+                </div>
+            </div>
+        </div>
+
+        <!-- Лента новостей -->
+        <div class="feed">
+            <!-- Посты -->
+            <div class="posts">
+                <!-- Создание поста -->
+                <div class="create-post">
+                    <div class="post-header">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Пользователь">
+                        <div class="post-input">
+                            <input type="text" placeholder="Что у вас нового?">
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action">
+                            <i class="fas fa-image"></i>
+                            <span>Фото/Видео</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-user-tag"></i>
+                            <span>Отметить друзей</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-smile"></i>
+                            <span>Эмоции</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пост 1 -->
+                <div class="post">
+                    <div class="post-user">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Пользователь">
+                        <div class="user-info">
+                            <h4>Анна Иванова</h4>
+                            <p>2 часа назад · <i class="fas fa-globe-europe"></i></p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Привет всем! Поделюсь с вами прекрасным видом, который открывается с горы Эльбрус. Это было незабываемое путешествие! ❤️🏔️</p>
+                    </div>
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Горы">
+                    </div>
+                    <div class="post-stats">
+                        <div class="likes">
+                            <i class="fas fa-thumbs-up"></i> 245
+                        </div>
+                        <div class="comments-shares">
+                            78 комментариев · 15 репостов
+                        </div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="post-button">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>Нравится</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="far fa-comment"></i>
+                            <span>Комментировать</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="fas fa-share"></i>
+                            <span>Поделиться</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пост 2 -->
+                <div class="post">
+                    <div class="post-user">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Пользователь">
+                        <div class="user-info">
+                            <h4>Михаил Петров</h4>
+                            <p>Вчера в 18:30 · <i class="fas fa-user-friends"></i></p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Только что опубликовал новое видео на моём канале! В этом выпуске мы тестируем новые смартфоны 2023 года. Не пропустите!</p>
+                    </div>
+                    <div class="post-stats">
+                        <div class="likes">
+                            <i class="fas fa-thumbs-up"></i> 124
+                        </div>
+                        <div class="comments-shares">
+                            42 комментария · 8 репостов
+                        </div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="post-button">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>Нравится</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="far fa-comment"></i>
+                            <span>Комментировать</span>
+                        </div>
+                        <div class="post-button">
+                            <i class="fas fa-share"></i>
+                            <span>Поделиться</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="sidebar">
+                <!-- Запросы в друзья -->
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Запросы в друзья</h3>
+                    <div class="friend-request">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Пользователь">
+                        <div class="friend-info">
+                            <h4>Екатерина Смирнова</h4>
+                            <p>5 общих друзей</p>
+                        </div>
+                        <div class="friend-actions">
+                            <div class="accept-btn">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="decline-btn">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="friend-request">
+                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Пользователь">
+                        <div class="friend-info">
+                            <h4>Алексей Кузнецов</h4>
+                            <p>2 общих друга</p>
+                        </div>
+                        <div class="friend-actions">
+                            <div class="accept-btn">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="decline-btn">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Популярные каналы -->
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Популярные каналы</h3>
+                    <div class="trending-channel">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="Канал">
+                        <div class="channel-info">
+                            <h4>Технологии будущего</h4>
+                            <p>125K подписчиков</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="trending-channel">
+                        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80" alt="Канал">
+                        <div class="channel-info">
+                            <h4>Путешествия по миру</h4>
+                            <p>89K подписчиков</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="trending-channel">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Канал">
+                        <div class="channel-info">
+                            <h4>Кулинарные шедевры</h4>
+                            <p>214K подписчиков</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рекомендуемые группы -->
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Рекомендуемые группы</h3>
+                    <div class="suggested-group">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Группа">
+                        <div class="group-info">
+                            <h4>Фотографы России</h4>
+                            <p>45K участников</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="suggested-group">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Группа">
+                        <div class="group-info">
+                            <h4>IT Сообщество</h4>
+                            <p>112K участников</p>
+                        </div>
+                        <div class="accept-btn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация в Bolun-Gram</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="login-options">
+                    <div class="option-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </div>
+                    <div class="option-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Телефон</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">Полное имя</label>
+                    <input type="text" id="fullName" placeholder="Иван Иванов">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="example@mail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="tel" id="phone" placeholder="+7 (900) 123-45-67">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="Не менее 8 символов">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Подтвердите пароль</label>
+                    <input type="password" id="confirmPassword" placeholder="Повторите пароль">
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthday">Дата рождения</label>
+                    <input type="date" id="birthday">
+                </div>
+                
+                <button class="submit-btn">Зарегистрироваться</button>
+                
+                <p style="text-align: center; margin-top: 20px;">
+                    Уже есть аккаунт? <a href="#" style="color: var(--primary);">Войти</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Логика модальных окон
+        document.addEventListener('DOMContentLoaded', function() {
+            // Открытие модального окна регистрации
+            setTimeout(function() {
+                document.getElementById('registerModal').style.display = 'flex';
+            }, 1000);
+            
+            // Закрытие модальных окон
+            document.querySelectorAll('.close-modal').forEach(function(closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Клик вне модального окна
+            window.addEventListener('click', function(event) {
+                document.querySelectorAll('.modal').forEach(function(modal) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Переключение между вкладками навигации
+            document.querySelectorAll('.nav-item').forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Удаляем активный класс у всех элементов
+                    document.querySelectorAll('.nav-item').forEach(function(el) {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущему элементу
+                    this.classList.add('active');
+                });
+            });
+            
+            // Логика кнопок "Нравится"
+            document.querySelectorAll('.post-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    if (this.querySelector('i').classList.contains('far')) {
+                        this.querySelector('i').className = 'fas fa-thumbs-up';
+                        this.style.color = var(--primary);
+                    } else {
+                        this.querySelector('i').className = 'far fa-thumbs-up';
+                        this.style.color = 'inherit';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+    </html>
